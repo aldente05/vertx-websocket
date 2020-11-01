@@ -2,16 +2,15 @@ package id.aldente.socket.model.response;
 
 import id.aldente.socket.model.MessageType;
 import id.aldente.socket.model.payload.DepartementPayload;
-import io.vertx.core.Handler;
-import io.vertx.rxjava.ext.web.RoutingContext;
+import id.aldente.socket.model.payload.DirectAllocationPayload;
 
 import java.util.List;
 
 /**
- * Created by f.putra on 10/25/20.
+ * Created by f.putra on 11/1/20.
  */
-public class DepartementResponse{
-    private List<DepartementPayload> data;
+public class DirectAllocationResponse {
+    private List<DirectAllocationPayload> data;
 
     private String error;
 
@@ -21,22 +20,19 @@ public class DepartementResponse{
 
     private MessageType messageType;
 
-    private String senderId;
-
-    public DepartementResponse() {
+    public DirectAllocationResponse() {
         this.data = data;
         this.error = error;
         this.success = success;
         this.cause = cause;
         this.messageType = messageType;
-        this.senderId = senderId;
     }
 
-    public List<DepartementPayload> getData() {
+    public List<DirectAllocationPayload> getData() {
         return data;
     }
 
-    public void setData(List<DepartementPayload> data) {
+    public void setData(List<DirectAllocationPayload> data) {
         this.data = data;
     }
 
@@ -72,23 +68,14 @@ public class DepartementResponse{
         this.messageType = messageType;
     }
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
     @Override
     public String toString() {
-        return "DepartementResponse{" +
+        return "DirectAllocationResponse{" +
                 "data=" + data +
                 ", error='" + error + '\'' +
                 ", success=" + success +
                 ", cause='" + cause + '\'' +
                 ", messageType=" + messageType +
-                ", senderId='" + senderId + '\'' +
                 '}';
     }
 }

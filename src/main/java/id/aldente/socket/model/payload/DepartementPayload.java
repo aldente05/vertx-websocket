@@ -5,26 +5,16 @@ package id.aldente.socket.model.payload;
  */
 public class DepartementPayload {
 
-    private String senderId;
-    private String method;
     private Integer id;
     private String code;
     private String departement;
+    private String account;
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
+    public DepartementPayload() {
+        this.id = id;
+        this.code = code;
+        this.departement = departement;
+        this.account = account;
     }
 
     public Integer getId() {
@@ -51,14 +41,21 @@ public class DepartementPayload {
         this.departement = departement;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
         return "DepartementPayload{" +
-                "senderId='" + senderId + '\'' +
-                ", method='" + method + '\'' +
-                ", id=" + id +
+                "id=" + id +
                 ", code='" + code + '\'' +
                 ", departement='" + departement + '\'' +
+                ", account='" + account + '\'' +
                 '}';
     }
 }
