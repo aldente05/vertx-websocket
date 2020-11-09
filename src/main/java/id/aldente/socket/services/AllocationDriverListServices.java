@@ -15,7 +15,7 @@ import java.sql.*;
  */
 public class AllocationDriverListServices {
 
-    private static final Logger logger = LoggerFactory.getLogger(DepartementListServices.class);
+    private static final Logger logger = LoggerFactory.getLogger(AllocationDriverListServices.class);
 
     @NonBlocking
     public static BaseResponse<JsonArray> getAllocationDriver(JSONObject jsonRequest, String dbeaqUrl, String dbeaqUser, String dbeaqPassword) {

@@ -8,21 +8,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.prudential.platform.stream.compute.NonBlocking;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Created by f.putra on 11/10/20.
  */
-public class ApproveDirectAllocation {
+public class ApproveTimeAllocation {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApproveDirectAllocation.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApproveTimeAllocation.class);
 
     @NonBlocking
     public static BaseResponse<JsonArray> approve(JSONObject jsonRequest, String dbeaqUrl, String dbeaqUser, String dbeaqPassword) {
         BaseResponse<JsonArray> result = new BaseResponse<JsonArray>();
         try {
             Connection conn = DBConnectionService.connect(dbeaqUrl, dbeaqUser, dbeaqPassword);
-            String queryUpdate = "UPDATE eaq_dev.transaction_direct_allocation SET approve_by = ?, approve_time = ?, is_approve = ? WHERE kode = ?";
+            String queryUpdate = "UPDATE eaq_dev.transaction_time_allocation SET approve_by = ?, approve_time = ?, is_approve = ? WHERE kode = ?";
 
             try {
                 PreparedStatement psmt = conn.prepareStatement(queryUpdate);

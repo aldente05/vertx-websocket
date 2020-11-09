@@ -33,7 +33,7 @@ public class UpdateDirectAllocationServices {
                     "benefit_for_total =  ?, acquisition_non_pre_coverage =  ?, acquisition_pre_coverage =  ?, acquisition_total =  ?, " +
                     "maintenance_premium_related =  ?, maintenance_non_premium_related =  ?, maintenance_total =  ?,  allocation_dirver =  ?, " +
                     "remarks =  ?, created_by =  ?, created_time =  ?, updated_by =  ?, " +
-                    "updated_time =  ?, approve_by =  ?, approve_time =  ?, is_approve =  ? WHERE account = ? AND kode = ?";
+                    "updated_time =  ? WHERE account = ? AND kode = ?";
 
             try {
                 PreparedStatement psmt = conn.prepareStatement(queryUpdate);
@@ -55,14 +55,11 @@ public class UpdateDirectAllocationServices {
                 psmt.setString(16, jsonRequest.getString("allocation_dirver"));
                 psmt.setString(17, jsonRequest.getString("remarks"));
                 psmt.setString(18, jsonRequest.getString("created_by"));
-                psmt.setDate(19, Date.valueOf(jsonRequest.getString("created_by")));
-                psmt.setString(20, jsonRequest.getString("update_by"));
-                psmt.setDate(21, Date.valueOf(jsonRequest.getString("updated_by")));
-                psmt.setString(22, jsonRequest.getString("approve_by"));
-                psmt.setDate(23, Date.valueOf(jsonRequest.getString("approve_time")));
-                psmt.setBoolean(24, false);
-                psmt.setString(25, jsonRequest.getString("account"));
-                psmt.setString(26, jsonRequest.getString("kode"));
+                psmt.setDate(19, Date.valueOf(jsonRequest.getString("created_time")));
+                psmt.setString(20, jsonRequest.getString("updated_by"));
+                psmt.setDate(21, Date.valueOf(jsonRequest.getString("updated_time")));
+                psmt.setString(22, jsonRequest.getString("account"));
+                psmt.setString(23, jsonRequest.getString("kode"));
                 psmt.executeUpdate();
                 result.setMessage("Update Success");
                 result.setSuccess(true);
