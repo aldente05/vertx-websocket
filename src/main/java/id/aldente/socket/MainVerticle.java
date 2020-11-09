@@ -1,8 +1,7 @@
 package id.aldente.socket;
 
 import com.google.gson.Gson;
-import id.aldente.socket.services.DepartementListServices;
-import id.aldente.socket.services.DirectAllocationListServices;
+import id.aldente.socket.services.*;
 import id.aldente.socket.util.*;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -112,13 +111,26 @@ public class MainVerticle {
                             setResponse(reply, CommonMessage.SUCCESS);
                             break;
 
-                        case "direct-allocation-create":
-                            logger.info("post direct allocation transaction");
-                            result = g.toJson(DirectAllocationListServices.getDirectAllocationList(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
+                        case "time-allocation-list":
+                            logger.info("get transaction");
+                            result = g.toJson(TimeAllocationListServices.getTimeAllocationList(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
                             reply.setBodyAsString(result);
                             setResponse(reply, CommonMessage.SUCCESS);
                             break;
 
+                        case "direct-allocation-create":
+                            logger.info("post direct allocation transaction");
+                            result = g.toJson(UpdateDirectAllocationServices.updateDirectAllocation(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
+                            reply.setBodyAsString(result);
+                            setResponse(reply, CommonMessage.SUCCESS);
+                            break;
+
+                        case "time-allocation-create":
+                            logger.info("post direct allocation transaction");
+                            result = g.toJson(UpdateTimeAllocationServices.updateTimeAllocation(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
+                            reply.setBodyAsString(result);
+                            setResponse(reply, CommonMessage.SUCCESS);
+                            break;
                         default:
                             setResponse(reply, CommonMessage.INVALID_REQUEST, "operation name undefined");
                             break;

@@ -4,37 +4,32 @@ import com.google.gson.Gson;
 import id.aldente.socket.config.DBConnectionService;
 import id.aldente.socket.model.DirectAllocationParser;
 import id.aldente.socket.util.BaseResponse;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import io.vertx.core.json.Json;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.prudential.platform.stream.compute.NonBlocking;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Created by f.putra on 11/4/20.
+ * Created by f.putra on 11/6/20.
  */
-public class UpdateDirectAllocationServices {
-    private static final Logger logger = LoggerFactory.getLogger(UpdateDirectAllocationServices.class);
+public class UpdateTimeAllocationServices {
+
+    private static final Logger logger = LoggerFactory.getLogger(UpdateTimeAllocationServices.class);
 
     @NonBlocking
-    public static BaseResponse<String> updateDirectAllocation(JSONObject jsonRequest, String dbeaqUrl, String dbeaqUser, String dbeaqPassword) {
+    public static BaseResponse<String> updateTimeAllocation(JSONObject jsonRequest, String dbeaqUrl, String dbeaqUser, String dbeaqPassword) {
         BaseResponse<String> result = new BaseResponse<String>();
         try {
             Gson gson = new Gson();
             DirectAllocationParser obj = gson.fromJson(jsonRequest.getString("data"), DirectAllocationParser.class);
-logger.info(obj.toString());
+
+            logger.info(obj.toString());
 //            Connection conn = DBConnectionService.connect(dbeaqUrl, dbeaqUser, dbeaqPassword);
 //            obj.getData().forEach(v -> {
-//                String queryUpdate = "UPDATE eaq_dev.transaction_direct_allocation " +
+//                String queryUpdate = "UPDATE eaq_dev.transaction_time_allocation " +
 //                        "SET description = ?, sun_ac_description = ?, expense_type = ?, attributablilty_attributable = ?, " +
 //                        "attributablilty_non_attributable =  ?, attributablilty_total =  ?, benefit_for_acquisition =  ?, benefit_for_maintenance =  ?, " +
 //                        "benefit_for_total =  ?, acquisition_non_pre_coverage =  ?, acquisition_pre_coverage =  ?, acquisition_total =  ?, " +

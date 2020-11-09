@@ -11,8 +11,6 @@
     <properties>
         <vertx.version>3.9.4</vertx.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <!-- the main verticle class name -->
-        <main.verticle>id.aldente.socket.MainVerticle</main.verticle>
     </properties>
 
     <dependencies>
