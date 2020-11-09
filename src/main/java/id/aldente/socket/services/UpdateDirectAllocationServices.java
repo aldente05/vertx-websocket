@@ -5,10 +5,7 @@ import id.aldente.socket.config.DBConnectionService;
 import id.aldente.socket.model.DirectAllocationParser;
 import id.aldente.socket.util.BaseResponse;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import io.vertx.core.json.Json;
 import org.json.JSONObject;
@@ -29,60 +26,53 @@ public class UpdateDirectAllocationServices {
     public static BaseResponse<String> updateDirectAllocation(JSONObject jsonRequest, String dbeaqUrl, String dbeaqUser, String dbeaqPassword) {
         BaseResponse<String> result = new BaseResponse<String>();
         try {
-            Gson gson = new Gson();
-            DirectAllocationParser obj = gson.fromJson(jsonRequest.getString("data"), DirectAllocationParser.class);
-logger.info(obj.toString());
-//            Connection conn = DBConnectionService.connect(dbeaqUrl, dbeaqUser, dbeaqPassword);
-//            obj.getData().forEach(v -> {
-//                String queryUpdate = "UPDATE eaq_dev.transaction_direct_allocation " +
-//                        "SET description = ?, sun_ac_description = ?, expense_type = ?, attributablilty_attributable = ?, " +
-//                        "attributablilty_non_attributable =  ?, attributablilty_total =  ?, benefit_for_acquisition =  ?, benefit_for_maintenance =  ?, " +
-//                        "benefit_for_total =  ?, acquisition_non_pre_coverage =  ?, acquisition_pre_coverage =  ?, acquisition_total =  ?, " +
-//                        "maintenance_premium_related =  ?, maintenance_non_premium_related =  ?, maintenance_total =  ?,  allocation_dirver =  ?, " +
-//                        "remarks =  ?, created_by =  ?, created_time =  ?, updated_by =  ?, " +
-//                        "updated_time =  ?, approve_by =  ?, approve_time =  ?, is_approve =  ? WHERE account = ?";
-//
-//                try {
-//                    PreparedStatement psmt = conn.prepareStatement(queryUpdate);
-//                    psmt.setString(1, v.getDescription());
-//                    psmt.setString(2, v.getSun_ac_description());
-//                    psmt.setString(3, v.getExpense_type());
-//                    psmt.setDouble(4, v.getAttributablilty_attributable());
-//                    psmt.setDouble(5, v.getAttributablilty_non_attributable());
-//                    psmt.setDouble(6, v.getAttributablilty_total());
-//                    psmt.setDouble(7, v.getBenefit_for_acquisition());
-//                    psmt.setDouble(8, v.getBenefit_for_maintenance());
-//                    psmt.setDouble(9, v.getBenefit_for_total());
-//                    psmt.setDouble(10, v.getAcquisition_non_pre_coverage());
-//                    psmt.setDouble(11, v.getAcquisition_pre_coverage());
-//                    psmt.setDouble(12, v.getAcquisition_total());
-//                    psmt.setDouble(13, v.getMaintenance_premium_related());
-//                    psmt.setDouble(14, v.getMaintenance_non_premium_related());
-//                    psmt.setDouble(15, v.getMaintenance_total());
-//                    psmt.setString(16, v.getAllocation_dirver());
-//                    psmt.setString(17, v.getRemarks());
-//                    psmt.setString(18, v.getCreatedBy());
-//                    psmt.setString(19, v.getCreatedTime());
-//                    psmt.setString(20, v.getUpdatedBy());
-//                    psmt.setString(21, v.getUpdatedTime());
-//                    psmt.setString(22, v.getApproveBy());
-//                    psmt.setString(23, v.getApproveTime());
-//                    psmt.setBoolean(24, v.isApprove());
-//                    psmt.setLong(25, v.getAccount());
-//                    psmt.executeUpdate();
-//                } catch (SQLException throwables) {
-//                    throwables.printStackTrace();
-//                }
-//            });
-            result.setMessage("Update Success");
-            result.setSuccess(true);
-            return result;
-        } catch (Exception e) {
-            logger.error("update direct allocation : " + e.getMessage());
-            result.setMessage("500");
-            result.setSuccess(false);
-            return result;
-        }
+            Connection conn = DBConnectionService.connect(dbeaqUrl, dbeaqUser, dbeaqPassword);
+            String queryUpdate = "UPDATE eaq_dev.transaction_direct_allocation " +
+                    "SET description = ?, sun_ac_description = ?, expense_type = ?, attributablilty_attributable = ?, " +
+                    "attributablilty_non_attributable =  ?, attributablilty_total =  ?, benefit_for_acquisition =  ?, benefit_for_maintenance =  ?, " +
+                    "benefit_for_total =  ?, acquisition_non_pre_coverage =  ?, acquisition_pre_coverage =  ?, acquisition_total =  ?, " +
+                    "maintenance_premium_related =  ?, maintenance_non_premium_related =  ?, maintenance_total =  ?,  allocation_dirver =  ?, " +
+                    "remarks =  ?, created_by =  ?, created_time =  ?, updated_by =  ?, " +
+                    "updated_time =  ?, approve_by =  ?, approve_time =  ?, is_approve =  ? WHERE account = ? AND kode = ?";
 
+            try {
+                PreparedStatement psmt = conn.prepareStatement(queryUpdate);
+                psmt.setString(1, jsonRequest.getString("description"));
+                psmt.setString(2, jsonRequest.getString("sun_ac_description"));
+                psmt.setString(3, jsonRequest.getString("expense_type"));
+                psmt.setDouble(4, jsonRequest.getDouble("attributability_attributable"));
+                psmt.setDouble(5, jsonRequest.getDouble("attributability_non_attributable"));
+                psmt.setDouble(6, jsonRequest.getDouble("attributability_total"));
+                psmt.setDouble(7, jsonRequest.getDouble("benefit_for_acquisition"));
+                psmt.setDouble(8, jsonRequest.getDouble("benefit_for_maintenance"));
+                psmt.setDouble(9, jsonRequest.getDouble("benefit_for_total"));
+                psmt.setDouble(10, jsonRequest.getDouble("acquisition_non_pre_coverage"));
+                psmt.setDouble(11, jsonRequest.getDouble("acquisition_pre_coverage"));
+                psmt.setDouble(12, jsonRequest.getDouble("acquisition_total"));
+                psmt.setDouble(13, jsonRequest.getDouble("maintenance_premium_related"));
+                psmt.setDouble(14, jsonRequest.getDouble("maintenance_non_premium_related"));
+                psmt.setDouble(15, jsonRequest.getDouble("maintenance_total"));
+                psmt.setString(16, jsonRequest.getString("allocation_dirver"));
+                psmt.setString(17, jsonRequest.getString("remarks"));
+                psmt.setString(18, jsonRequest.getString("created_by"));
+                psmt.setDate(19, Date.valueOf(jsonRequest.getString("created_by")));
+                psmt.setString(20, jsonRequest.getString("update_by"));
+                psmt.setDate(21, Date.valueOf(jsonRequest.getString("updated_by")));
+                psmt.setString(22, jsonRequest.getString("approve_by"));
+                psmt.setDate(23, Date.valueOf(jsonRequest.getString("approve_time")));
+                psmt.setBoolean(24, false);
+                psmt.setString(25, jsonRequest.getString("account"));
+                psmt.setString(26, jsonRequest.getString("kode"));
+                psmt.executeUpdate();
+                result.setMessage("Update Success");
+                result.setSuccess(true);
+                return result;
+            } catch (Exception e) {
+                logger.error("update direct allocation : " + e.getMessage());
+                result.setMessage("500");
+                result.setSuccess(false);
+                return result;
+            }
+
+        }
     }
-}

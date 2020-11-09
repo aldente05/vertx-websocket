@@ -104,6 +104,13 @@ public class MainVerticle {
                             setResponse(reply, CommonMessage.SUCCESS);
                             break;
 
+                        case "allocationDriver":
+                            logger.info("get allocationDriver");
+                            result = g.toJson(AllocationDriverListServices.getAllocationDriver(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
+                            reply.setBodyAsString(result);
+                            setResponse(reply, CommonMessage.SUCCESS);
+                            break;
+
                         case "direct-allocation-list":
                             logger.info("get transaction");
                             result = g.toJson(DirectAllocationListServices.getDirectAllocationList(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
@@ -121,6 +128,12 @@ public class MainVerticle {
                         case "direct-allocation-create":
                             logger.info("post direct allocation transaction");
                             result = g.toJson(UpdateDirectAllocationServices.updateDirectAllocation(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
+                            reply.setBodyAsString(result);
+                            setResponse(reply, CommonMessage.SUCCESS);
+                            break;
+                        case "direct-allocation-approve":
+                            logger.info("post direct allocation transaction");
+                            result = g.toJson(ApproveDirectAllocation.approve(jsonRequest, dbeaqUrl, dbeaqUser, dbeaqPassword));
                             reply.setBodyAsString(result);
                             setResponse(reply, CommonMessage.SUCCESS);
                             break;
