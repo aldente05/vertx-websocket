@@ -24,31 +24,31 @@ public class ApproveTimeAllocation {
     public static BaseResponse<JsonArray> approve(JSONObject jsonRequest, String dbeaqUrl, String dbeaqUser, String dbeaqPassword) {
         BaseResponse<JsonArray> result = new BaseResponse<JsonArray>();
         try {
+
             Connection conn = DBConnectionService.connect(dbeaqUrl, dbeaqUser, dbeaqPassword);
             String queryUpdate = "UPDATE eaq_dev.transaction_time_allocation SET approve_by = ?, approve_time = ?, is_approve = ? WHERE kode = ?";
-
-            try {
-                PreparedStatement psmt = conn.prepareStatement(queryUpdate);
-                psmt.setString(1, jsonRequest.getString("approve_by"));
-                psmt.setDate(2, Date.valueOf(jsonRequest.getString("approve_time")));
-                psmt.setBoolean(3, jsonRequest.getBoolean("approve"));
-                psmt.setString(4, jsonRequest.getString("kode"));
-                result.setMessage("Approve Success");
-                result.setSuccess(true);
-                return result;
-            } catch (SQLException e) {
-                logger.error("eaqDeparement SQLException : " + e.toString());
-                logger.error("eaqDeparement : " + e.getMessage());
-                result.setMessage("500");
-                result.setSuccess(false);
-                return result;
-            } catch (Exception e) {
-                logger.error("eaqDeparement Exception : " + e.toString());
-                logger.error("eaqDeparement : " + e.getMessage());
-                result.setMessage("500");
-                result.setSuccess(false);
-                return result;
-            }
-        };
+            PreparedStatement psmt = conn.prepareStatement(queryUpdate);
+            psmt.setString(1, jsonRequest.getString("username"));
+            psmt.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+            psmt.setBoolean(3, jsonRequest.getBoolean("approve"));
+            psmt.setString(4, jsonRequest.getString("kode"));
+            psmt.executeUpdate();
+            result.setMessage("Approve Success");
+            result.setSuccess(true);
+            result.setData(psmt.);
+            return result;
+        } catch (SQLException e) {
+            logger.error("eaqDeparement SQLException : " + e.toString());
+            logger.error("eaqDeparement : " + e.getMessage());
+            result.setMessage("500");
+            result.setSuccess(false);
+            return result;
+        } catch (Exception e) {
+            logger.error("eaqDeparement Exception : " + e.toString());
+            logger.error("eaqDeparement : " + e.getMessage());
+            result.setMessage("500");
+            result.setSuccess(false);
+            return result;
+        }
     }
 }
