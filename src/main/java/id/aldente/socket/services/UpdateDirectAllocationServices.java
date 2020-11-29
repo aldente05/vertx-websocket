@@ -32,7 +32,7 @@ public class UpdateDirectAllocationServices {
         String description = jsonRequest.getString("description");
         String sun_ac_description = jsonRequest.getString("sun_ac_description");
         String expense_type = jsonRequest.getString("expense_type");
-        double attributability_attributable = jsonRequest.getDouble("attributability_attributable");
+        double attributability_attributable = jsonRequest.getInt("attributability_attributable");
         double attributability_non_attributable = jsonRequest.getDouble("attributability_non_attributable");
         double attributability_total = jsonRequest.getDouble("attributability_total");
         double benefit_for_acquisition = jsonRequest.getDouble("benefit_for_acquisition");
@@ -47,7 +47,7 @@ public class UpdateDirectAllocationServices {
         String allocation_dirver = jsonRequest.getString("allocation_dirver");
         String remarks = jsonRequest.getString("remarks");
         String updated_by = jsonRequest.getString("username");
-        String account = jsonRequest.getString("account");
+        long account = jsonRequest.getLong("account");
         String kode = jsonRequest.getString("kode");
 
         try {
@@ -80,7 +80,7 @@ public class UpdateDirectAllocationServices {
             psmt.setString(17, remarks);
             psmt.setString(18, updated_by);
             psmt.setDate(19, new java.sql.Date(System.currentTimeMillis()));
-            psmt.setString(20, account);
+            psmt.setLong(20, Long.parseLong(account));
             psmt.setString(21, kode);
 
             ResultSet rs = psmt.executeQuery();
